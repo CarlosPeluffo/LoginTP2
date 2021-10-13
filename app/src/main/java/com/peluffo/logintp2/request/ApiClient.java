@@ -16,16 +16,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class ApiClient {
-   /* private static File file;
-
-    private static File conectar(Context context){
-        if(file==null){
-            file = new File(context.getDataDir(), "usuarios.txt");
-        }
-        return file;
-    }*/
     public static void guardar(Context context, Usuario usuario){
         File file = new File(context.getDataDir(), "usuarios.txt");;
+        Log.d("Salida", context.getDataDir() + "");
+        Log.d("Salida", context.getFilesDir() + ""); //usar para crear una carpeta files
         try {
             FileOutputStream nodo = new FileOutputStream(file);
             BufferedOutputStream buffer = new BufferedOutputStream(nodo);
@@ -68,13 +62,15 @@ public class ApiClient {
     public static Usuario login(Context context, String email, String contra){
         Usuario logeado = null;
         Usuario user = leer(context);
-        Long dni = user.getDni();
-        String apellido = user.getApellido();
-        String nombre = user.getNombre();
-        String mail = user.getMail();
-        String password = user.getPassword();
-        if(email.equals(mail) && contra.equals(password)){
-            logeado = new Usuario(dni, apellido, nombre, mail, password);
+        if(user != null){
+            Long dni = user.getDni();
+            String apellido = user.getApellido();
+            String nombre = user.getNombre();
+            String mail = user.getMail();
+            String password = user.getPassword();
+            if(email.equals(mail) && contra.equals(password)){
+                logeado = new Usuario(dni, apellido, nombre, mail, password);
+            }
         }
         return logeado;
     }
